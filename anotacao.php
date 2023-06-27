@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Editar anotação</title>
+	<title>Editar Anotação</title>
 	<style>
 	  body {
   background-color: blue;
