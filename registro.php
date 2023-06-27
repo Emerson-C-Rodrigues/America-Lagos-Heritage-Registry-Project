@@ -90,7 +90,7 @@
     width: 97%;
     color: rgb(0, 0, 0);
     background-color: #ffffff;
-    font-size: 15px;
+    font-size: 16px;
     border-radius:0.8vw;
   }
 
@@ -106,7 +106,8 @@
 
   th, td {
     text-align: left;
-    padding: 8px;
+    padding: 6px;
+    text-align: center;s
   }
 
   th {
@@ -126,6 +127,7 @@
     text-decoration: none;
     display: inline-block;
     border-radius: 4px;
+    font-weight: bold;
   }
 
   .visualizar {
@@ -136,26 +138,29 @@
     text-decoration: none;
     display: inline-block;
     border-radius: 4px;
+    font-weight: bold;
   }
 
   .anotacao {
     background-color: #0000CD;
-    color: white;
+    color: black;
     padding: 8px 16px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     border-radius: 4px;
+    font-weight: bold;
   }
 
   .excluir {
     background-color: #8B0000;
-    color: white;
+    color: black;
     padding: 8px 16px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     border-radius: 4px;
+    font-weight: bold;
   }
 
   footer {
@@ -250,12 +255,12 @@
   // Verifica se há registros retornados
   if ($result->num_rows > 0) {
     // Exibe os registros em uma tabela
-    echo "<table><tr><th>ID</th><th>Modelo</th><th>Setor</th><th>Data</th><th>Número</th><th>Responsável</th><th>Visualizar</th><th>Editar</th><th>Excluir</th></tr>";
+    echo "<table><tr><th>ID</th><th>Modelo</th><th>Setor</th><th>Data</th><th>Número</th><th>Responsável</th><th>Visualizar</th><th>Editar</th><th>Excluir</th><th>Especificações <br> do <br> produto</th></tr>";
     while($row = $result->fetch_assoc()) {
       // Modifica o formato da data
       $data = date("d/m/Y", strtotime($row["data"]));
       // Exibe os valores separados por "|"
-      echo "<tr><td>".$row["id"]."</td><td>".$row["modelo"]."</td><td>".$row["setor"]."</td><td>".$data."</td><td>".$row["numero"]."</td><td>".$row["responsavel"]."</td><td><a class='visualizar' href='visualizar.php?id=".$row["id"]."'>Visualizar</a></td><td><a class='editar' href='editar.php?id=".$row["id"]."'>Editar</a></td><td><a class='excluir' href='excluir.php?id=".$row["id"]."'>Excluir</a></td></tr>";
+      echo "<tr><td>".$row["id"]."</td><td>".$row["modelo"]."</td><td>".$row["setor"]."</td><td>".$data."</td><td>".$row["numero"]."</td><td>".$row["responsavel"]."</td><td><a class='visualizar' href='visualizar.php?id=".$row["id"]."'>Visualizar</a></td><td><a class='editar' href='editar.php?id=".$row["id"]."'>Editar</a></td><td><a class='excluir' href='excluir.php?id=".$row["id"]."'>Excluir</a></td><td><a class='anotacao' href='anotacao.php?id=".$row["id"]."'>Especificações</a></td></tr>";
     }
     echo "</table>";
   } else {
