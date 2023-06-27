@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registros de Patrimonios</title>
+    <link rel="stylesheet" href="astyle.css">
+  </head>
+  <body>
+    <header>
+      <h1>Registros de Patrimonios</h1>
+        <nav>
+          <ul>
+            <li><a href="index.html">Pagina Inicial</a></li>
+            <li><a href="../registro.php">Registros</a></li>
+          </ul>
+        </nav>
+    </header> 
+    <main>
+        <form action="../registro.php" method="post" enctype="multipart/form-data">
+          <fieldset>
+            <legend>Cadastro do Patrimonio</legend>
+            <label for="equipamento">Equipamento:</label>
+            <input type="text" id="equipamento" name="equipamento" required>
+            <label for="modelo">Modelo:</label>
+            <input type="text" id="modelo" name="modelo" required>
+            <label for="setor">Setor:</label>
+              <select class="select-container" id="setor" name="setor" required>
+                <option value="">Selecione um setor</option>
+                <option value="Administrativo">Administrativo</option>
+                <option value="Financeiro">Financeiro</option>
+                <option value="Marketing">Marketing</option>
+                <option value="Ecommerce">Ecommerce</option>
+                <option value="Matriz-Loja-1">Matriz-Loja-1</option>
+                <option value="Planeta-Loja-2">Planeta-Loja-2</option>
+                <option value="Mega-Loja-3">Mega-Loja-3</option>
+             </select>
+            <label for="numero">Número do Produto:</label>
+            <input type="text" id="numero" name="numero" required>
+            <label for="responsavel">Responsável pelo Produto</label>
+            <input type="text" id="responsavel" name="responsavel" required>
+            Adicionar Arquivo: <input type="file" name="arquivo" >
+            <button type="submit">Enviar</button>
+          </fieldset>
+        </form>
+    </main>
+    <footer>
+      <form action="../registro.php" method="get">
+        <button type="submit">Ver registros</button>
+      </form>
+    </footer>
+  </body>
+</html>
