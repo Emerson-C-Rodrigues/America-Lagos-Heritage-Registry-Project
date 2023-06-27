@@ -182,23 +182,26 @@ nav a {
         }
     }
 
-    // Verifica se o formulário de nova anotação foi enviado
+    // Verifica se o formulário de alterações foi enviado
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Obtém a nova anotação do formulário
-        $nova_anotacao = $_POST['nova_anotacao'];
+        // Obtém os dados do formulário
+        $numero_nota = $_POST['numero_nota'];
+        $especificacoes = $_POST['especificacoes'];
+        $validade_garantia = $_POST['validade_garantia'];
+        $anotacao = $_POST['anotacao'];
 
-        // Prepara uma instrução SQL INSERT para inserir a nova anotação no banco de dados
-        $sql = "INSERT INTO registros (anotacao) VALUES ('$nova_anotacao')";
+        // Prepara uma instrução SQL UPDATE para atualizar as informações no banco de dados
+        $sql = "UPDATE registros SET numero_nota = '$numero_nota', especificacoes = '$especificacoes', validade_garantia = '$validade_garantia', anotacao = '$anotacao'";
 
         // Executa a instrução SQL
         if ($conn->query($sql) === TRUE) {
-            echo "Anotação adicionada com sucesso.";
+            echo "Alterações salvas com sucesso.";
         } else {
-            echo "Erro ao adicionar anotação: " . $conn->error;
+            echo "Erro ao salvar as alterações: " . $conn->error;
         }
     }
 
-    // Prepara uma instrução SQL SELECT para buscar todas as anotações no banco de dados
+    // Prepara uma instrução SQL SELECT para buscar todas as informações no banco de dados
     $sql = "SELECT * FROM registros";
 
     // Executa a instrução SQL
@@ -208,35 +211,50 @@ nav a {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Anotações</title>
+    <title>Especificações do produto</title>
 	<nav>
           <ul>
             <li><a href="index/index.html">Pagina Inicial</a></li>
             <li><a href="registro.php">Registros</a></li>
           </ul>
-        </nav>
+    </nav>
 </head>
 <body>
-    <h1>Anotações</h1>
+    <h1>Especificações do produto</h1>
 
-    <!-- Formulário de nova anotação -->
+    <!-- Formulário de alterações -->
     <form method="post">
-        <label for="nova_anotacao">Nova anotação:</label><br>
-        <textarea id="nova_anotacao" name="nova_anotacao"></textarea><br>
-        <input type="submit" value="Adicionar">
+        <label for="numero_nota">Número da nota:</label><br>
+        <input type="text" id="numero_nota" name="numero_nota"><br><br>
+
+        <label for="especificacoes">Especificações:</label><br>
+        <textarea id="especificacoes" name="especificacoes"></textarea><br><br>
+
+        <label for="validade_garantia">Validade da garantia:</label><br>
+        <input type="text" id="validade_garantia" name="validade_garantia"><br><br>
+
+        <label for="anotacao">Anotação:</label><br>
+        <textarea id="anotacao" name="anotacao"></textarea><br><br>
+
+        <input type="submit" value="Salvar Alterações">
     </form>
 
-    <!-- Lista de anotações -->
+    <!-- Lista de informações -->
     <ul class="lista">
         <?php
-            // Verifica se há anotações para exibir
+            // Verifica se há informações para exibir
             if ($result->num_rows > 0) {
-                // Exibe cada anotação em uma lista
-				while ($row = $result->fetch_assoc()) {
-					echo "<li class='anotacao'>" . $row['anotacao'] . " <a class='excluir' href='?excluir=" . $row['id'] . "'>Excluir</a></li>";
-				}
+                // Exibe as informações
+                while ($row = $result->fetch_assoc()) {
+                    echo "<li>Número da nota: " . $row['numero_nota'] . "</li>";
+                    echo "<li>Especificações: " . $row['especificacoes'] . "</li>";
+                    echo "<li>Validade da garantia: " . $row['validade_garantia'] . "</li>";
+                    echo "<li>Anotação: " . $row['anotacao'] . "</li>";
+                    echo "<li class='anotacao'><a class='excluir' href='?excluir=" . $row['id'] . "'>Excluir</a></li>";
+                    echo "<br>";
+                }
             } else {
-                echo "<li>Nenhuma anotação encontrada.</li>";
+                echo "<li>Nenhuma informação encontrada.</li>";
             }
         ?>
     </ul>
