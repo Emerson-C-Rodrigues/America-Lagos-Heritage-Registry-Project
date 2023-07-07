@@ -21,9 +21,9 @@
           <fieldset>
             <legend>Cadastro do Patrimonio</legend>
             <label for="equipamento">Equipamento:</label>
-            <input type="text" id="equipamento" name="equipamento" required>
+            <input type="text" id="equipamento" name="equipamento" placeholder="Ex: Mesa, Cadeira, CPU..." required>
             <label for="modelo">Modelo:</label>
-            <input type="text" id="modelo" name="modelo" required>
+            <input type="text" id="modelo" name="modelo" placeholder="Ex: Marca, LG, Sansung, C3TECH..." required>
             <label for="setor">Setor:</label>
               <select class="select-container" id="setor" name="setor" required>
                 <option value="">Selecione um setor</option>
@@ -35,10 +35,21 @@
                 <option value="Planeta-Loja-2">Planeta-Loja-2</option>
                 <option value="Mega-Loja-3">Mega-Loja-3</option>
              </select>
-            <label for="numero">Número do Produto:</label>
-            <input type="text" id="numero" name="numero" required>
-            <label for="responsavel">Responsável pelo Produto</label>
-            <input type="text" id="responsavel" name="responsavel" required>
+             <label for="numero">Número do Produto:</label>
+             <input type="text" id="numero" name="numero" placeholder="Digite o Codigo serial" required>
+             <label for="responsavel">Responsável pelo Produto</label>
+             <input type="text" id="responsavel" name="responsavel" placeholder="Nome do Responsável" required>
+             <label for="anotacao">Especificações</label>
+             <textarea 
+             style="display: block !important;
+             margin-bottom: 1.6vw !important;
+             width: 88.9% !important;
+             padding: 15px !important;
+             border-radius: 0.8vw !important;
+             border: none !important;" 
+             type= "text" id="anotacao" name="anotacao" rows="5" cols="40" placeholder="Ex:&#10;-Tamanho...&#10;-Material...&#10;-Data de garantia..." required></textarea> 
+             <label for="valor">Número do Produto:</label>
+             <input type="text" id="valor" name="valor" placeholder="Digite apenas numeros Ex:1250,99" required>
             Adicionar Arquivo: <input type="file" name="arquivo" >
             <button type="submit">Enviar</button>
           </fieldset>

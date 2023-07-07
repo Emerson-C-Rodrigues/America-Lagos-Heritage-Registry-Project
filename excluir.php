@@ -10,12 +10,16 @@
   font-family: Arial, sans-serif;
 }
 
-nav ul {
+header {
   text-align: center;
   padding: 1.6vw;
   background-color: rgba(255, 255, 255, 0.8);
   border-bottom: 0.8px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0px 0px 0.8vw rgba(0, 0, 0, 0.2);
+}
+nav ul {
+  text-align: center;
+  padding: 1.6vw;
   margin:0px 0px 20px 0px;
 }
 nav li {
@@ -60,13 +64,14 @@ legend {
 label{
   display: block;
   color: red;
-  margin-bottom: 0.8vw;
-  font-size: 1.2vw;
+  margin: 10px 10px 10px 10px;
+  font-size: 15px;
+  font-weight: bold;
 }
 
 input[type="number"] {
   display: block;
-  margin-bottom: 1.6vw;
+  margin: 10px 5px 5px 10px;
   width: 88.9%;
   padding: 1.6vw;
   border-radius: 0.8vw;
@@ -75,8 +80,8 @@ input[type="number"] {
 
 input[type="submit"]{
    display: center;
-  margin-bottom: 1.6vw;
-  width: 60vw;
+  margin: 5px 5px 10px 10px;
+  width: 88.9%;
   padding: 1.6vw;
   border-radius: 0.8vw;
   border: none;
@@ -86,7 +91,7 @@ input[type="submit"]{
 input[type="submit"] {
   background-color: #4CAF50;
   color: #fff;
-  font-size: 1.2vw;
+  font-size: 17px;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -153,16 +158,17 @@ $conn->close();
 <html>
 <head>
   <meta charset="UTF-8">
-  <title >Excluir Registro</title>
-  <nav>
+</head>
+<header>
+<h1>Excluir Registro</h1>
+        <nav>
           <ul>
             <li><a href="index/index.html">Pagina Inicial</a></li>
             <li><a href="registro.php">Registros</a></li>
           </ul>
         </nav>
-</head>
+  </header>
 <body>  
-  <h2 class="title" >Excluir Registro</h2>
   <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
     <label for="id">ID do Registro:</label>
     <input type="number" name="id">

@@ -80,12 +80,12 @@ label {
 
 input[type="text"],
 input[type="date"] {
-  display: flex;
-  margin-bottom: 1.6vw;
-  width: 88.9%;
-  padding: 15px;
-  border-radius: 0.8vw;
-  border: none;
+  display: flex !important;
+  margin-bottom: 1.6vw !important;
+  width: 88.9% !important;
+  padding: 15px !important;
+  border-radius: 0.8vw !important;
+  border: none !important;
 }
 
 

@@ -13,9 +13,6 @@
 nav ul {
   text-align: center;
   padding: 1.6vw;
-  background-color: rgba(255, 255, 255, 0.8);
-  border-bottom: 0.8px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0px 0px 0.8vw rgba(0, 0, 0, 0.2);
   margin:0px 0px 20px 0px;
 }
 
@@ -66,8 +63,10 @@ legend {
 
 label {
   display: block;
-  margin-bottom: 0.8vw;
-  font-size: 1.2vw;
+  color: red;
+  margin: 10px 10px 10px 10px;
+  font-size: 15px;
+  font-weight: bold;
 }
 
 input[type="text"],
@@ -92,7 +91,13 @@ input[type="submit"]{
 
 input[type="text"],
 input[type="date"] {
-  background-color: rgba(255, 255, 255, 0.8);
+  display: center;
+  margin: 5px 5px 10px 10px;
+  width: 88.9%;
+  padding: 1.6vw;
+  border-radius: 0.8vw;
+  border: none;
+  
 }
 
 input[type="submit"] {
@@ -138,14 +143,16 @@ footer {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+</head>
+<header> 
+  <h1>Editor</h1>
   <nav>
           <ul>
             <li><a href="index/index.html">Pagina Inicial</a></li>
             <li><a href="registro.php">Registros</a></li>
           </ul>
         </nav>
-</head>
+      </header>
 <body>
 <?php
 $servername = "localhost"; // Endereço do servidor
@@ -170,10 +177,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $numero = $_POST["numero"];
   $responsavel = $_POST["responsavel"];
   $anotacao = $_POST["anotacao"];
+  $valor = $_POST["valor"];
   $id = $_POST["id"]; // Obtém o ID do registro a ser atualizado
 
   // Prepara uma instrução SQL UPDATE
-  $sql = "UPDATE registros SET modelo='$modelo', setor='$setor', data='$data', numero='$numero', responsavel='$responsavel', anotacao='$anotacao' WHERE id=$id";
+  $sql = "UPDATE registros SET modelo='$modelo', setor='$setor', data='$data', numero='$numero', responsavel='$responsavel', anotacao='$anotacao', valor='$valor' WHERE id=$id";
 
   // Executa a instrução SQL
   if ($conn->query($sql) === TRUE) {
@@ -204,6 +212,7 @@ if (isset($_GET["id"])) {
     echo "Número: <input type='text' name='numero' value='".$row["numero"]."'><br>";
     echo "Responsável: <input type='text' name='responsavel' value='".$row["responsavel"]."'><br>";
     echo "anotacao: <input type='text' name='anotacao' value='".$row["anotacao"]."'><br>";
+    echo "valor: <input type='text' name='valor' value='".$row["valor"]."'><br>";
     echo "<input type='submit' value='Atualizar'>";
     echo "</form>";
   } else {
