@@ -5,13 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro</title>
-    <nav>
-            <ul>
-              <li><a href="index/index.html">Pagina Inicial</a></li>
-              <li><a href="registro.php">Registros</a></li>
-            </ul>
-          </nav>
-
           <script>
   function searchTable() {
     // Declara as variáveis que serão usadas na pesquisa
@@ -40,8 +33,15 @@
   </script>
 
   </head>
-
-
+  <header>
+    <h1>Registros</h1>
+    <nav>
+            <ul>
+              <li><a href="index/index.html">Pagina Inicial</a></li>
+              <li><a href="registro.php">Registros</a></li>
+            </ul>
+          </nav>
+  </header>
   <style>
     body {
     background-color: blue;
@@ -54,13 +54,17 @@
     font-family: Arial, sans-serif;
   }
 
+  header {
+  text-align: center;
+  padding: 1.6vw;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-bottom: 0.8px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0px 0px 0.8vw rgba(0, 0, 0, 0.2);
+}
+
   nav ul {
     text-align: center;
     padding: 1.6vw;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-bottom: 0.8px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0px 0px 0.8vw rgba(0, 0, 0, 0.2);
-    margin:0px 0px 20px 0px;
   }
 
   nav li {
@@ -86,7 +90,7 @@
     border: none;
     appearance: none;
     padding: 10px;
-    margin: 0px 10px 10px 10px;
+    margin: 20px 10px 10px 10px;
     width: 97%;
     color: rgb(0, 0, 0);
     background-color: #ffffff;
@@ -190,54 +194,42 @@
 
   date_default_timezone_set('America/Sao_Paulo');
 
-  $servername = "localhost"; // Endereço do servidor
-  $username = "root"; // Nome de usuário do banco de dados
-  $password = ""; // Senha do banco de dados
-  $dbname = "americalagos"; // Nome do banco de dados
+$servername = "localhost"; // Endereço do servidor
+$username = "root"; // Nome de usuário do banco de dados
+$password = ""; // Senha do banco de dados
+$dbname = "americalagos"; // Nome do banco de dados
 
-  // Cria uma conexão com o banco de dados
-  $conn = new mysqli($servername, $username, $password, $dbname);
+// Cria uma conexão com o banco de dados
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-  // Verifica se ocorreu um erro na conexão
-  if ($conn->connect_error) {
-    die("Conexão falhou: " . $conn->connect_error);
-  }
+// Verifica se ocorreu um erro na conexão
+if ($conn->connect_error) {
+  die("Conexão falhou: " . $conn->connect_error);
+}
 
-  // Verifica se o formulário foi enviado
-  if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Obtém os dados do formulário
-      $modelo = $_POST["modelo"];
-      $setor = $_POST["setor"];
-      $data = date("Y-m-d"); // Obtém a data atual
-      $numero = $_POST["numero"];
-      $responsavel = $_POST["responsavel"];
-    // Verifica se um arquivo foi enviado
-    if(isset($_FILES['arquivo']) && !empty($_FILES['arquivo']['name'])) {
-      // Define as configurações do upload
-      $diretorio = "uploads/"; // Diretório onde o arquivo será armazenado
-      $nome_arquivo = $_FILES['arquivo']['name']; // Nome do arquivo
-      $caminho_arquivo = $diretorio . $nome_arquivo; // Caminho completo onde o arquivo será armazenado
+// Verifica se o formulário foi enviado
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  // Obtém os dados do formulário
+  $modelo = $_POST["modelo"];
+  $setor = $_POST["setor"];
+  $data = date("Y-m-d"); // Obtém a data atual
+  $numero = $_POST["numero"];
+  $responsavel = $_POST["responsavel"];
+  $anotacao = $_POST["anotacao"];
+  $valor = $_POST["valor"];
 
-      // Move o arquivo para o diretório especificado
-      if(move_uploaded_file($_FILES['arquivo']['tmp_name'], $caminho_arquivo)) {
-        // Prepara uma instrução SQL INSERT
-        $stmt = $conn->prepare("INSERT INTO registros (modelo, setor, data, numero, responsavel, anotacao, arquivo) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssssss", $modelo, $setor, $data, $numero, $responsavel, $anotacao, $caminho_arquivo);
-        // Executa a instrução SQL
-        if ($stmt->execute()) {
-          $last_id = $stmt->insert_id;
-          echo "Registro salvo com sucesso. ID do registro: " . $last_id;
-        } else {
-          echo "Erro ao salvar registro: " . $stmt->error;
-        }
-      } else {
-        echo "Erro ao fazer upload do arquivo.";
-      }
-    } else {
-// Prepara uma instrução SQL INSERT
-      $stmt = $conn->prepare("INSERT INTO registros (modelo, setor, data, numero, responsavel) VALUES (?, ?, ?, ?, ?)");
-      $stmt->bind_param("sssss", $modelo, $setor, $data, $numero, $responsavel);
+  // Verifica se um arquivo foi enviado
+  if(isset($_FILES['arquivo']) && !empty($_FILES['arquivo']['name'])) {
+    // Define as configurações do upload
+    $diretorio = "uploads/"; // Diretório onde o arquivo será armazenado
+    $nome_arquivo = $_FILES['arquivo']['name']; // Nome do arquivo
+    $caminho_arquivo = $diretorio . $nome_arquivo; // Caminho completo onde o arquivo será armazenado
 
+    // Move o arquivo para o diretório especificado
+    if(move_uploaded_file($_FILES['arquivo']['tmp_name'], $caminho_arquivo)) {
+      // Prepara uma instrução SQL INSERT
+      $stmt = $conn->prepare("INSERT INTO registros (modelo, setor, data, numero, responsavel, anotacao, arquivo, valor) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+      $stmt->bind_param("sssssssd", $modelo, $setor, $data, $numero, $responsavel, $anotacao, $caminho_arquivo, $valor);
       // Executa a instrução SQL
       if ($stmt->execute()) {
         $last_id = $stmt->insert_id;
@@ -245,29 +237,53 @@
       } else {
         echo "Erro ao salvar registro: " . $stmt->error;
       }
+    } else {
+      echo "Erro ao fazer upload do arquivo.";
     }
-  }
-
-  // Consulta os registros na tabela 'registros'
-  $sql = "SELECT * FROM registros";
-  $result = $conn->query($sql);
-
-  // Verifica se há registros retornados
-  if ($result->num_rows > 0) {
-    // Exibe os registros em uma tabela
-    echo "<table><tr><th>ID</th><th>Modelo</th><th>Setor</th><th>Data</th><th>Número</th><th>Responsável</th><th>Visualizar</th><th>Editar</th><th>Excluir</th><th>Especificações <br> do <br> produto</th></tr>";
-    while($row = $result->fetch_assoc()) {
-      // Modifica o formato da data
-      $data = date("d/m/Y", strtotime($row["data"]));
-      // Exibe os valores separados por "|"
-      echo "<tr><td>".$row["id"]."</td><td>".$row["modelo"]."</td><td>".$row["setor"]."</td><td>".$data."</td><td>".$row["numero"]."</td><td>".$row["responsavel"]."</td><td><a class='visualizar' href='visualizar.php?id=".$row["id"]."'>Visualizar</a></td><td><a class='editar' href='editar.php?id=".$row["id"]."'>Editar</a></td><td><a class='excluir' href='excluir.php?id=".$row["id"]."'>Excluir</a></td><td><a class='anotacao' href='anotacao.php?id=".$row["id"]."'>Especificações</a></td></tr>";
-    }
-    echo "</table>";
   } else {
-    echo "Não há registros.";
-  }
+    // Prepara uma instrução SQL INSERT
+    $stmt = $conn->prepare("INSERT INTO registros (modelo, setor, data, numero, responsavel, anotacao, valor) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssssd", $modelo, $setor, $data, $numero, $responsavel, $anotacao, $valor);
 
-  // Fecha a conexão com o banco de dados
-  $conn->close();
-  ?>
-  </html>
+    // Executa a instrução SQL
+    if ($stmt->execute()) {
+      $last_id = $stmt->insert_id;
+      echo "Registro salvo com sucesso. ID do registro: " . $last_id;
+    } else {
+      echo "Erro ao salvar registro: " . $stmt->error;
+    }
+  }
+}
+
+// Consulta os registros na tabela 'registros'
+$sql = "SELECT * FROM registros";
+$result = $conn->query($sql);
+
+// Verifica se há registros retornados
+if ($result->num_rows > 0) {
+  // Variável para armazenar o valor patrimonial total
+  $valorPatrimonial = 0;
+
+  // Exibe os registros em uma tabela
+  echo "<table><tr><th>ID</th><th>Modelo</th><th>Setor</th><th>Data</th><th>Número</th><th>Responsável</th><th>Valor</th><th>Visualizar</th><th>Editar</th><th>Excluir</th><th>Especificações do produto</th></tr>";
+  while($row = $result->fetch_assoc()) {
+    // Modifica o formato da data
+    $data = date("d/m/Y", strtotime($row["data"]));
+    // Exibe os valores separados por "|"
+    echo "<tr><td>".$row["id"]."</td><td>".$row["modelo"]."</td><td>".$row["setor"]."</td><td>".$data."</td><td>".$row["numero"]."</td><td>".$row["responsavel"]."</td><td>".$row["valor"]."</td><td><a class='visualizar' href='visualizar.php?id=".$row["id"]."'>Visualizar</a></td><td><a class='editar' href='editar.php?id=".$row["id"]."'>Editar</a></td><td><a class='excluir' href='excluir.php?id=".$row["id"]."'>Excluir</a></td><td><a class='anotacao' href='anotacao.php?id=".$row["id"]."'>anotacao</a></td></tr>";
+
+    // Soma o valor do registro ao valor patrimonial total
+    $valorPatrimonial += $row["valor"];
+  }
+  echo "</table>";
+
+  // Exibe o valor patrimonial total
+  echo "Valor Patrimonial Total: " . $valorPatrimonial;
+} else {
+  echo "Não há registros.";
+}
+
+// Fecha a conexão com o banco de dados
+$conn->close();
+?>
+</html>
