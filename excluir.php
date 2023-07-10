@@ -18,10 +18,11 @@ header {
   box-shadow: 0px 0px 0.8vw rgba(0, 0, 0, 0.2);
 }
 nav ul {
-  text-align: center;
-  padding: 1.6vw;
-  margin:0px 0px 20px 0px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
+
 nav li {
   display: inline-block;
   margin-right: 20px;

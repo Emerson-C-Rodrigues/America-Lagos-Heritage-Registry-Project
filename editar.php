@@ -11,9 +11,9 @@
 }
 
 nav ul {
-  text-align: center;
-  padding: 1.6vw;
-  margin:0px 0px 20px 0px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 nav li {
@@ -48,6 +48,12 @@ form {
   border: none;
   background-color: transparent;
 }
+p {
+  font-size: 17px;
+  font-weight: bold;
+  color: red;
+  margin: 5px;
+}
 
 fieldset {
   margin: 0;
@@ -81,8 +87,8 @@ input[type="date"] {
 
 input[type="submit"]{
    display: center;
-  margin-bottom: 1.6vw;
-  width: 60vw;
+  margin:0px 10px;
+  width: 88.9%;
   padding: 1.6vw;
   border-radius: 0.8vw;
   border: none;
@@ -103,7 +109,7 @@ input[type="date"] {
 input[type="submit"] {
   background-color: #4CAF50;
   color: #fff;
-  font-size: 1.2vw;
+  font-size: 18px;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -206,13 +212,13 @@ if (isset($_GET["id"])) {
     // Exibe o formulário de edição com os valores preenchidos
     $row = $result->fetch_assoc();
     echo "<form method='POST'>";
-    echo "ID: <input type='text' name='id' value='".$row["id"]."' readonly><br>";
-    echo "Modelo: <input type='text' name='modelo' value='".$row["modelo"]."'><br>";
-    echo "Setor: <input type='text' name='setor' value='".$row["setor"]."'><br>";
-    echo "Número: <input type='text' name='numero' value='".$row["numero"]."'><br>";
-    echo "Responsável: <input type='text' name='responsavel' value='".$row["responsavel"]."'><br>";
-    echo "anotacao: <input type='text' name='anotacao' value='".$row["anotacao"]."'><br>";
-    echo "valor: <input type='text' name='valor' value='".$row["valor"]."'><br>";
+    echo "<p>ID:</p> <input type='text' name='id' value='".$row["id"]."' readonly><br>";
+    echo "<p>Modelo:</p> <input type='text' name='modelo' value='".$row["modelo"]."'><br>";
+    echo "<p>Setor:</p> <input type='text' name='setor' value='".$row["setor"]."'><br>";
+    echo "<p>Número:</p> <input type='text' name='numero' value='".$row["numero"]."'><br>";
+    echo "<p>Responsável:</p> <input type='text' name='responsavel' value='".$row["responsavel"]."'><br>";
+    echo "<p>Especificações:</p> <input type='text' name='anotacao' value='".$row["anotacao"]."'><br>";
+    echo "<p>valor:</p> <input type='text' name='valor' value='".$row["valor"]."'><br>";
     echo "<input type='submit' value='Atualizar'>";
     echo "</form>";
   } else {
