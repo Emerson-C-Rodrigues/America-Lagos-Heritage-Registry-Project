@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Anotações</title>
+  <title>Especificações</title>
   <style>
     body {
   background-color: blue;
@@ -17,9 +17,9 @@
   font-family: Arial, sans-serif;
 }
 nav ul {
-  text-align: center;
-  padding: 1.6vw;
-  margin:0px 0px 20px 0px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 nav li {
@@ -74,7 +74,7 @@ nav a {
 </head>
 <header> 
           
-<h1>Anotações</h1>
+<h1>Especificações</h1>
           <nav>
             <ul>
               <li><a href="index/index.html">Pagina Inicial</a></li>

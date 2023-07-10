@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro</title>
-          <script>
+    <script>
   function searchTable() {
     // Declara as variáveis que serão usadas na pesquisa
     var input, filter, table, tr, td, i, txtValue;
@@ -15,33 +15,23 @@
     tr = table.getElementsByTagName("tr");
 
     // Loop por todas as linhas da tabela e oculta aquelas que não correspondem à pesquisa
-    for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td");
-      for (j = 0; j < td.length; j++) {
-        if (td[j]) {
-          txtValue = td[j].textContent || td[j].innerText;
-          if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            tr[i].style.display = "";
-            break;
-          } else {
-            tr[i].style.display = "none";
-          }
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName("td");
+          for (j = 0; j < td.length; j++) {
+            if (td[j]) {
+              txtValue = td[j].textContent || td[j].innerText;
+              if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+                break;
+              } else {
+                tr[i].style.display = "none";
+             }
+            }
+         }
         }
       }
-    }
-  }
-  </script>
-
+    </script>
   </head>
-  <header>
-    <h1>Registros</h1>
-    <nav>
-            <ul>
-              <li><a href="index/index.html">Pagina Inicial</a></li>
-              <li><a href="registro.php">Registros</a></li>
-            </ul>
-          </nav>
-  </header>
   <style>
     body {
     background-color: blue;
@@ -62,20 +52,21 @@
   box-shadow: 0px 0px 0.8vw rgba(0, 0, 0, 0.2);
 }
 
-  nav ul {
-    text-align: center;
-    padding: 1.6vw;
-  }
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
 
-  nav li {
-    display: inline-block;
-    margin-right: 20px;
-  }
+nav li {
+  display: inline-block;
+  margin-right: 20px;
+}
 
-  nav a {
-    color: #000;
-    text-decoration: none;
-  }
+nav a {
+  color: #000;
+  text-decoration: none;
+}
   main {
     margin: 1.6vw auto;
     max-width: 80vw;
@@ -111,7 +102,7 @@
   th, td {
     text-align: left;
     padding: 6px;
-    text-align: center;s
+    text-align: center;
   }
 
   th {
@@ -185,14 +176,22 @@
     }
   }
   </style>
-
+<body>
+  <header>
+    <h1>Registros</h1>
+      <nav>
+        <ul>
+          <li><a href="index/index.html">Pagina Inicial</a></li>
+          <li><a href="registro.php">Registros</a></li>
+        </ul>
+      </nav>
+  </header>
   <div>
-  <input class="input-container" type="text" id="myInput" onkeyup="searchTable()" placeholder="Pesquisar...">
+    <input class="input-container" type="text" id="myInput" onkeyup="searchTable()" placeholder="Pesquisar...">
   </div>
-
   <?php
 
-  date_default_timezone_set('America/Sao_Paulo');
+date_default_timezone_set('America/Sao_Paulo');
 
 $servername = "localhost"; // Endereço do servidor
 $username = "root"; // Nome de usuário do banco de dados
@@ -204,47 +203,33 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Verifica se ocorreu um erro na conexão
 if ($conn->connect_error) {
-  die("Conexão falhou: " . $conn->connect_error);
+die("Conexão falhou: " . $conn->connect_error);
 }
 
 // Verifica se o formulário foi enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  // Obtém os dados do formulário
-  $modelo = $_POST["modelo"];
-  $setor = $_POST["setor"];
-  $data = date("Y-m-d"); // Obtém a data atual
-  $numero = $_POST["numero"];
-  $responsavel = $_POST["responsavel"];
-  $anotacao = $_POST["anotacao"];
-  $valor = $_POST["valor"];
+// Obtém os dados do formulário
+$equipamento = $_POST["equipamento"];
+$modelo = $_POST["modelo"];
+$setor = $_POST["setor"];
+$data = date("Y-m-d"); // Obtém a data atual
+$numero = $_POST["numero"];
+$responsavel = $_POST["responsavel"];
+$anotacao = $_POST["anotacao"];
+$valor = $_POST["valor"];
 
-  // Verifica se um arquivo foi enviado
-  if(isset($_FILES['arquivo']) && !empty($_FILES['arquivo']['name'])) {
-    // Define as configurações do upload
-    $diretorio = "uploads/"; // Diretório onde o arquivo será armazenado
-    $nome_arquivo = $_FILES['arquivo']['name']; // Nome do arquivo
-    $caminho_arquivo = $diretorio . $nome_arquivo; // Caminho completo onde o arquivo será armazenado
+// Verifica se um arquivo foi enviado
+if(isset($_FILES['arquivo']) && !empty($_FILES['arquivo']['name'])) {
+  // Define as configurações do upload
+  $diretorio = "uploads/"; // Diretório onde o arquivo será armazenado
+  $nome_arquivo = $_FILES['arquivo']['name']; // Nome do arquivo
+  $caminho_arquivo = $diretorio . $nome_arquivo; // Caminho completo onde o arquivo será armazenado
 
-    // Move o arquivo para o diretório especificado
-    if(move_uploaded_file($_FILES['arquivo']['tmp_name'], $caminho_arquivo)) {
-      // Prepara uma instrução SQL INSERT
-      $stmt = $conn->prepare("INSERT INTO registros (modelo, setor, data, numero, responsavel, anotacao, arquivo, valor) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-      $stmt->bind_param("sssssssd", $modelo, $setor, $data, $numero, $responsavel, $anotacao, $caminho_arquivo, $valor);
-      // Executa a instrução SQL
-      if ($stmt->execute()) {
-        $last_id = $stmt->insert_id;
-        echo "Registro salvo com sucesso. ID do registro: " . $last_id;
-      } else {
-        echo "Erro ao salvar registro: " . $stmt->error;
-      }
-    } else {
-      echo "Erro ao fazer upload do arquivo.";
-    }
-  } else {
+  // Move o arquivo para o diretório especificado
+  if(move_uploaded_file($_FILES['arquivo']['tmp_name'], $caminho_arquivo)) {
     // Prepara uma instrução SQL INSERT
-    $stmt = $conn->prepare("INSERT INTO registros (modelo, setor, data, numero, responsavel, anotacao, valor) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssssd", $modelo, $setor, $data, $numero, $responsavel, $anotacao, $valor);
-
+    $stmt = $conn->prepare("INSERT INTO registros (equipamento, modelo, setor, data, numero, responsavel, anotacao, arquivo, valor) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssssssd", $equipamento, $modelo, $setor, $data, $numero, $responsavel, $anotacao, $caminho_arquivo, $valor);
     // Executa a instrução SQL
     if ($stmt->execute()) {
       $last_id = $stmt->insert_id;
@@ -252,7 +237,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
       echo "Erro ao salvar registro: " . $stmt->error;
     }
+  } else {
+    echo "Erro ao fazer upload do arquivo.";
   }
+} else {
+  // Prepara uma instrução SQL INSERT
+  $stmt = $conn->prepare("INSERT INTO registros (equipamento, modelo, setor, data, numero, responsavel, anotacao, valor) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+  $stmt->bind_param("sssssssd", $equipamento, $modelo, $setor, $data, $numero, $responsavel, $anotacao, $valor);
+
+  // Executa a instrução SQL
+  if ($stmt->execute()) {
+    $last_id = $stmt->insert_id;
+    echo "Registro salvo com sucesso. ID do registro: " . $last_id;
+  } else {
+    echo "Erro ao salvar registro: " . $stmt->error;
+  }
+}
 }
 
 // Consulta os registros na tabela 'registros'
@@ -261,29 +261,37 @@ $result = $conn->query($sql);
 
 // Verifica se há registros retornados
 if ($result->num_rows > 0) {
-  // Variável para armazenar o valor patrimonial total
-  $valorPatrimonial = 0;
+// Variável para armazenar o valor patrimonial total
+$valorPatrimonial = 0;
 
-  // Exibe os registros em uma tabela
-  echo "<table><tr><th>ID</th><th>Modelo</th><th>Setor</th><th>Data</th><th>Número</th><th>Responsável</th><th>Valor</th><th>Visualizar</th><th>Editar</th><th>Excluir</th><th>Especificações do produto</th></tr>";
-  while($row = $result->fetch_assoc()) {
-    // Modifica o formato da data
-    $data = date("d/m/Y", strtotime($row["data"]));
-    // Exibe os valores separados por "|"
-    echo "<tr><td>".$row["id"]."</td><td>".$row["modelo"]."</td><td>".$row["setor"]."</td><td>".$data."</td><td>".$row["numero"]."</td><td>".$row["responsavel"]."</td><td>".$row["valor"]."</td><td><a class='visualizar' href='visualizar.php?id=".$row["id"]."'>Visualizar</a></td><td><a class='editar' href='editar.php?id=".$row["id"]."'>Editar</a></td><td><a class='excluir' href='excluir.php?id=".$row["id"]."'>Excluir</a></td><td><a class='anotacao' href='anotacao.php?id=".$row["id"]."'>anotacao</a></td></tr>";
+// Exibe os registros em uma tabela
+echo "<table><tr><th>ID</th><th>Equipamento</th><th>Modelo</th><th>Setor</th><th>Data</th><th>Número</th><th>Responsável</th><th>Valor</th><th>Visualizar</th><th>Editar</th><th>Excluir</th><th>Especificações do produto</th></tr>";
 
-    // Soma o valor do registro ao valor patrimonial total
-    $valorPatrimonial += $row["valor"];
-  }
-  echo "</table>";
+$valorPatrimonial = 0; // Variável para armazenar o valor patrimonial total
 
-  // Exibe o valor patrimonial total
-  echo "Valor Patrimonial Total: " . $valorPatrimonial;
+while($row = $result->fetch_assoc()) {
+  // Modifica o formato da data
+  $data = date("d/m/Y", strtotime($row["data"]));
+
+  // Exibe os valores separados por "|"
+  echo "<tr><td>".$row["id"]."</td><td>".$row["equipamento"]."</td><td>".$row["modelo"]."</td><td>".$row["setor"]."</td><td>".$data."</td><td>".$row["numero"]."</td><td>".$row["responsavel"]."</td><td>".$row["valor"]."</td><td><a class='visualizar' href='visualizar.php?id=".$row["id"]."'>Visualizar</a></td><td><a class='editar' href='editar.php?id=".$row["id"]."'>Editar</a></td><td><a class='excluir' href='excluir.php?id=".$row["id"]."'>Excluir</a></td><td><a class='anotacao' href='anotacao.php?id=".$row["id"]."'>anotacao</a></td></tr>";
+
+  // Soma o valor do registro ao valor patrimonial total
+  $valorPatrimonial += $row["valor"];
+}
+
+$numero_formatado = number_format($valorPatrimonial, 2);
+// Adiciona a linha com o valor patrimonial total
+echo "<tr><td colspan='6'></td><td>Valor Patrimonial =</td><td>" . $numero_formatado . "</td><td colspan='4'></td></tr>";
+
+echo "</table>";
+// Exibe o valor patrimonial total
 } else {
-  echo "Não há registros.";
+echo "Não há registros.";
 }
 
 // Fecha a conexão com o banco de dados
 $conn->close();
 ?>
+</body>
 </html>
