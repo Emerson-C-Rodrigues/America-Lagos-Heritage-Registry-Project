@@ -137,7 +137,7 @@ nav a {
   }
 
   .anotacao {
-    background-color: #0000CD;
+    background-color: #00BFFF;
     color: black;
     padding: 8px 16px;
     text-align: center;
@@ -148,7 +148,7 @@ nav a {
   }
 
   .excluir {
-    background-color: #8B0000;
+    background-color: #CD5C5C;
     color: black;
     padding: 8px 16px;
     text-align: center;
@@ -265,7 +265,7 @@ if ($result->num_rows > 0) {
 $valorPatrimonial = 0;
 
 // Exibe os registros em uma tabela
-echo "<table><tr><th>ID</th><th>Equipamento</th><th>Modelo</th><th>Setor</th><th>Data</th><th>Número</th><th>Responsável</th><th>Valor</th><th>Visualizar</th><th>Editar</th><th>Excluir</th><th>Especificações do produto</th></tr>";
+echo "<table><tr><th>ID</th><th>Equipamento</th><th>Modelo</th><th>Setor</th><th>Data</th><th>Número</th><th>Responsável</th><th>Valor</th><th>Visualizar</th><th>Editar</th><th>Excluir</th><th>Especificações</th></tr>";
 
 $valorPatrimonial = 0; // Variável para armazenar o valor patrimonial total
 
@@ -274,7 +274,7 @@ while($row = $result->fetch_assoc()) {
   $data = date("d/m/Y", strtotime($row["data"]));
 
   // Exibe os valores separados por "|"
-  echo "<tr><td>".$row["id"]."</td><td>".$row["equipamento"]."</td><td>".$row["modelo"]."</td><td>".$row["setor"]."</td><td>".$data."</td><td>".$row["numero"]."</td><td>".$row["responsavel"]."</td><td>".$row["valor"]."</td><td><a class='visualizar' href='visualizar.php?id=".$row["id"]."'>Visualizar</a></td><td><a class='editar' href='editar.php?id=".$row["id"]."'>Editar</a></td><td><a class='excluir' href='excluir.php?id=".$row["id"]."'>Excluir</a></td><td><a class='anotacao' href='anotacao.php?id=".$row["id"]."'>anotacao</a></td></tr>";
+  echo "<tr><td>".$row["id"]."</td><td>".$row["equipamento"]."</td><td>".$row["modelo"]."</td><td>".$row["setor"]."</td><td>".$data."</td><td>".$row["numero"]."</td><td>".$row["responsavel"]."</td><td>".$row["valor"]."</td><td><a class='visualizar' href='visualizar.php?id=".$row["id"]."'>Visualizar</a></td><td><a class='editar' href='editar.php?id=".$row["id"]."'>Editar</a></td><td><a class='excluir' href='excluir.php?id=".$row["id"]."'>Excluir</a></td><td><a class='anotacao' href='anotacao.php?id=".$row["id"]."'>Especificações</a></td></tr>";
 
   // Soma o valor do registro ao valor patrimonial total
   $valorPatrimonial += $row["valor"];
@@ -282,7 +282,7 @@ while($row = $result->fetch_assoc()) {
 
 $numero_formatado = number_format($valorPatrimonial, 2);
 // Adiciona a linha com o valor patrimonial total
-echo "<tr><td colspan='6'></td><td>Valor Patrimonial =</td><td>" . $numero_formatado . "</td><td colspan='4'></td></tr>";
+echo "<tr><td colspan='6'></td><td>Valor Patrimonial =</td><td>R$" . $numero_formatado . "</td><td colspan='4'></td></tr>";
 
 echo "</table>";
 // Exibe o valor patrimonial total
